@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Arquivo atual",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "preLaunchTask": "Arquivo a",
+            "justMyCode": false
+        }
+    ],
+    "tasks": [
+      {
+        "label": "Arquivo a",
+        "type": "shell",
+        "command": "cmd.exe",
+        "args": ["/C", "C:\\Users\\pr114067\\a.bat"],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated"
+        },
+        "problemMatcher": []
+      }
+    ]
+
+}

@@ -1,0 +1,11 @@
+- j da conf-sal é o valor do contrato, que deveria ser igual na folha analitica
+- j da conf-sal ainda está desatualizada
+
+conf-sal ... fol anali > nome(x) cargo data_adm (...)
+fol anali ... compra pag > nome(x) fol_anli.valor_liq ... comp_pag.valor
+conf-sal ... fgts > nome(x) data_adm (...)
+
+
+// novo
+conf-sal ... compra pag > nome(x)
+compra pag ... conf-sal > nome(x)
