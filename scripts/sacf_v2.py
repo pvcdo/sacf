@@ -607,6 +607,7 @@ class Janela(QMainWindow):
 
         df_relatorio_erros = pd.DataFrame(columns=['conferencia','nome','erro'])
 
+        # verificação --> Planilha -> Folha analítica > Profissional | Cargo | Data de admissão
         doc = lista_comparacao[2] #folha analítica
 
         for linha in df_conf_sal.values:
@@ -661,6 +662,26 @@ class Janela(QMainWindow):
                     df_erro = pd.DataFrame([['Planilha -> Folha analítica',conf_sal_nome,'Possível homônimo']],columns=['conferencia','nome','erro'])
                     df_relatorio_erros = pd.concat([df_relatorio_erros,df_erro],ignore_index=True)
 
+        # verificação --> Folha analítica -> Planilha > Profissional 
+        for linha in doc['df']: 
+            mat_fol_an_em_plan = 0
+            for linha_plan in df_conf_sal.values:
+                conf_sal_matricula = linha_plan[6]
+
+                conf_sal_matricula = str(conf_sal_matricula).zfill(6)
+
+                if linha[3] == conf_sal_matricula:
+                    mat_fol_an_em_plan += 1
+
+            if mat_fol_an_em_plan == 0:
+                df_erro = pd.DataFrame([['Folha analítica -> Planilha',linha,'Profissional na folha analítica e fora da planilha']],columns=['conferencia','nome','erro'])
+                df_relatorio_erros = pd.concat([df_relatorio_erros,df_erro],ignore_index=True)
+
+            if mat_fol_an_em_plan > 1:
+                df_erro = pd.DataFrame([['Folha analítica -> Planilha',linha,'Profissional na folha analítica mais de uma vez na planilha']],columns=['conferencia','nome','erro'])
+                df_relatorio_erros = pd.concat([df_relatorio_erros,df_erro],ignore_index=True)
+
+        # verificação --> Folha analítica -> Comprovante de pagamento > Valores de salário
         doc = lista_comparacao[0] #comprovante de pagamento
 
         for i, matricula in enumerate(df_fol_an['Matrícula']):
@@ -726,6 +747,32 @@ class Janela(QMainWindow):
                 else:
                     df_erro = pd.DataFrame([['Folha analítica -> Comprovante de pagamento',nome,'Possível homônimo']],columns=['conferencia','nome','erro'])
                     df_relatorio_erros = pd.concat([df_relatorio_erros,df_erro],ignore_index=True)
+        
+        # verificação --> Comprovante de pagamento -> Folha analítica > Profissional
+        for linha in doc['df']: 
+            
+            mat_com_pag_em_fol_an = 0
+            cpf_comp_cru = linha[0].replace('-', '').replace('.', '')
+
+            for linha_fol in df_fol_an.values:
+                fol_an_mat = linha_fol[4]
+
+                for linha_plan in df_conf_sal.values:
+                    if linha_plan[6] == fol_an_mat:
+                        cpf = linha_plan[4]
+                        break
+
+                if cpf == cpf_comp_cru:
+                    mat_com_pag_em_fol_an += 1
+
+            if mat_com_pag_em_fol_an == 0:
+                df_erro = pd.DataFrame([['Comprovante de pagamento -> Folha analítica',linha,'Profissional na folha analítica e fora da planilha']],columns=['conferencia','nome','erro'])
+                df_relatorio_erros = pd.concat([df_relatorio_erros,df_erro],ignore_index=True)
+
+            if mat_com_pag_em_fol_an > 1:
+                df_erro = pd.DataFrame([['Comprovante de pagamento -> Folha analítica',linha,'Profissional na folha analítica mais de uma vez na planilha']],columns=['conferencia','nome','erro'])
+                df_relatorio_erros = pd.concat([df_relatorio_erros,df_erro],ignore_index=True)
+
 
         doc = lista_comparacao[1] #fgts
 

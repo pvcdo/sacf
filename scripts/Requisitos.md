@@ -28,7 +28,7 @@
 
 ## Verificações
 
-### Primeira fase - OK
+### Primeira fase - Entrega oficial em 04/10/2023
 
 - Mensal
   - Planilha -> Folha analítica > Profissional | Cargo | Data de admissão
