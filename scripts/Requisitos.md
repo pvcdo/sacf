@@ -33,16 +33,16 @@
 - Mensal
   - Planilha -> Folha analítica > Profissional | Cargo | Data de admissão
   - Folha analítica -> Comprovante de pagamento > Valores de salário
-  - Planilha -> FGTS (GFIP / SEFIP) > Profissional | Data de admissão
+  - verificação --> Planilha -> FGTS (GFIP / SEFIP) > Profissional | Data de admissão
 
 ### Segunda fase - EM DESENVOLVIMENTO
 
 - Melhoria da Mensal
   - NOVO: Folha analítica -> Planilha > Profissional
   - NOVO: Comprovante de pagamento -> Folha analítica > Profissional
-  - NOVO: FGTS (GFIP / SEFIP) -> Planilha > Profissional
-  - NOVO: Planilha -> Comprovante de pagamento > Profissional
-  - NOVO: Comprovante de pagamento -> Planilha > Profissional
+  - #verificação --> FGTS (GFIP / SEFIP) -> Planilha > Profissional
+  - #verificação --> Planilha -> Comprovante de pagamento > Profissional
+  - #verificação --> Comprovante de pagamento -> Planilha > Profissional
 
 ### Terceira fase
 
