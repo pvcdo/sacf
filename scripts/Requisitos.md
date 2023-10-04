@@ -86,3 +86,10 @@
     - pprint // nativo?
     - unidecode
     - PyQt5
+
+## Informações de desenvolvimento
+
+- folha analítica = ['Matrícula'] com 6 dígitos
+- fgts = pis/pasep apenas números
+- comprovante de pagamento = cpf com traco e ponto
+- planilha conferencia = cpf com traco e ponto, pis/pasep apenas números, matricula desformatada

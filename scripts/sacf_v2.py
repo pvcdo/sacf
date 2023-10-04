@@ -204,7 +204,7 @@ class Janela(QMainWindow):
         """
         script_dir = os.path.join(os.path.expanduser("~"), "Desktop","ggcat_terceirizados",'scripts')
         #script_dir = os.path.dirname(os.path.abspath(__file__))
-        print(script_dir)
+        #print(script_dir)
         docs_dir = os.path.join(script_dir,'..', "docs",empresa_name)
         #docs_dir = os.path.join(script_dir,"..", "docs",empresa_name)
 
@@ -331,7 +331,7 @@ class Janela(QMainWindow):
 
             script_dir = os.path.join(os.path.expanduser("~"), "Desktop","ggcat_terceirizados",'scripts')
             #script_dir = os.path.dirname(os.path.abspath(__file__))
-            print(script_dir)
+            #print(script_dir)
             docs_dir = os.path.join(script_dir,'..', "docs",empresa_name)
             #docs_dir = os.path.join(script_dir,"..", "docs",empresa_name)
 
@@ -395,7 +395,7 @@ class Janela(QMainWindow):
 
             script_dir = os.path.join(os.path.expanduser("~"), "Desktop","ggcat_terceirizados",'scripts')
             #script_dir = os.path.dirname(os.path.abspath(__file__))
-            print(script_dir)
+            #print(script_dir)
             docs_dir = os.path.join(script_dir,'..', "docs",empresa_name)
             #docs_dir = os.path.join(script_dir,"..", "docs",empresa_name)
 
@@ -581,7 +581,7 @@ class Janela(QMainWindow):
         # printar todos os df's gerados
 
         
-        print(chalk.bold("df_conf_sal"))
+        """ print(chalk.bold("df_conf_sal"))
         pprint(df_conf_sal)
         print('-' * 120)
 
@@ -595,7 +595,7 @@ class Janela(QMainWindow):
 
         print(chalk.bold("df_fol_an"))
         pprint(df_fol_an)
-        
+         """
 
         # Comparações entre os DataFrames
 
@@ -663,14 +663,15 @@ class Janela(QMainWindow):
                     df_relatorio_erros = pd.concat([df_relatorio_erros,df_erro],ignore_index=True)
 
         # verificação --> Folha analítica -> Planilha > Profissional 
-        for linha in doc['df']: 
+        fol_an_col_mat = df_fol_an['Matrícula']
+        for fol_an_mat in fol_an_col_mat: 
             mat_fol_an_em_plan = 0
             for linha_plan in df_conf_sal.values:
                 conf_sal_matricula = linha_plan[6]
 
                 conf_sal_matricula = str(conf_sal_matricula).zfill(6)
 
-                if linha[3] == conf_sal_matricula:
+                if fol_an_mat == conf_sal_matricula:
                     mat_fol_an_em_plan += 1
 
             if mat_fol_an_em_plan == 0:
@@ -749,20 +750,17 @@ class Janela(QMainWindow):
                     df_relatorio_erros = pd.concat([df_relatorio_erros,df_erro],ignore_index=True)
         
         # verificação --> Comprovante de pagamento -> Folha analítica > Profissional
-        for linha in doc['df']: 
-            
+        df_comp_pag_col = df_comp_pag['NOME CPF']
+        for df_comp_pag_val in df_comp_pag_col: 
+            df_comp_pag_cpf = ''.join(re.findall(r'[\d.-]+',df_comp_pag_val))
             mat_com_pag_em_fol_an = 0
-            cpf_comp_cru = linha[0].replace('-', '').replace('.', '')
-
-            for linha_fol in df_fol_an.values:
-                fol_an_mat = linha_fol[4]
-
-                for linha_plan in df_conf_sal.values:
-                    if linha_plan[6] == fol_an_mat:
-                        cpf = linha_plan[4]
-                        break
-
-                if cpf == cpf_comp_cru:
+            
+            # consulta da matrícula do profissional na planilha a partir do cpf fornecido pelo comprovante de pagamento
+            mat_por_cpf_plan = str(df_conf_sal.loc[df_conf_sal['CPF'] == df_comp_pag_cpf,'Matricula'].values[0]).zfill(6)
+            
+            df_fol_an_col = df_fol_an['Matrícula']
+            for mat_fol_an in df_fol_an_col:
+                if mat_por_cpf_plan == mat_fol_an:
                     mat_com_pag_em_fol_an += 1
 
             if mat_com_pag_em_fol_an == 0:
